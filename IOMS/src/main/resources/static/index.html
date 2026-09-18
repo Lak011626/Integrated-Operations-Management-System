@@ -3,32 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hệ Thống Quản Trị Vận Hành (IOMS)</title>
+    <title>Đăng nhập IOMS</title>
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
-    <!-- Bảng điều hướng (Sidebar) -->
-    <div class="sidebar">
-      <h2>IOMS INTERN</h2>
-      <div class="menu-item active">📊 Tổng quan (Dashboard)</div>
-      <div class="menu-item">📝 Quản lý Công việc</div>
-      <div class="menu-item">💻 Quản lý Tài sản</div>
-      <div class="menu-item">👥 Quản lý Nhân sự</div>
-    </div>
+  <body class="login-body">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <h1>IOMS</h1>
+          <p>Hệ thống quản lý vận hành</p>
+        </div>
 
-    <!-- Nội dung chính -->
-    <div class="main-content">
-      <h1>Bảng điều khiển</h1>
+        <div id="login-message" class="alert info">
+          Vui lòng đăng nhập để tiếp tục.
+        </div>
 
-      <div class="card">
-        <h3>Kiểm tra kết nối Backend</h3>
-        <p>Ấn nút bên dưới để gọi API Test từ Spring Boot.</p>
-        <button onclick="testConnection()">Gọi API /api/ping</button>
+        <div class="form-group">
+          <label for="username">Tên đăng nhập</label>
+          <input id="username" type="text" placeholder="Nhập username" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <input id="password" type="password" placeholder="Nhập mật khẩu" />
+        </div>
+
+        <button class="login-btn" onclick="login()">Đăng nhập</button>
+
+        <div class="login-footer">
+          <button class="secondary-btn" onclick="testConnection()">
+            Kiểm tra kết nối
+          </button>
+        </div>
+
         <div id="api-result"></div>
       </div>
     </div>
 
-    <!-- Nhúng file Javascript -->
     <script src="/js/api.js"></script>
   </body>
 </html>

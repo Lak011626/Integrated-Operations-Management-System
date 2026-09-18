@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard IOMS</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="dashboard-layout">
+    <header class="dashboard-header">
+      <h2>IOMS Dashboard</h2>
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+    </header>
+
+    <main class="dashboard-content">
+      <div class="dashboard-box">
+        <div id="user-badge" class="user-badge">Đang tải...</div>
+        <h1>Chào mừng bạn đến với hệ thống IOMS</h1>
+        <p>Bạn đã đăng nhập thành công.</p>
+
+        <div class="meta-list">
+          <div><strong>Username:</strong> <span id="user-name">-</span></div>
+          <div><strong>Email:</strong> <span id="user-email">-</span></div>
+          <div>
+            <strong>Full name:</strong> <span id="user-fullname">-</span>
+          </div>
+          <div><strong>Roles:</strong> <span id="user-roles">-</span></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script>
+      const user = getCurrentUser();
+      if (!user) {
+        checkAuthAndRedirect();
+      } else {
+        document.getElementById("user-badge").textContent = "Đã đăng nhập";
+        document.getElementById("user-name").textContent = user.username || "-";
+        document.getElementById("user-email").textContent = user.email || "-";
+        document.getElementById("user-fullname").textContent =
+          user.fullName || "-";
+        document.getElementById("user-roles").textContent = Array.isArray(
+          user.roles,
+        )
+          ? user.roles.join(", ")
+          : "-";
+      }
+    </script>
+  </body>
+</html>
