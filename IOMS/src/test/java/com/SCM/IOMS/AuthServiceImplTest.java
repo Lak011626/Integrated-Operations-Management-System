@@ -5,6 +5,7 @@ import com.SCM.IOMS.dto.response.AuthResponse;
 import com.SCM.IOMS.entity.Role;
 import com.SCM.IOMS.entity.User;
 import com.SCM.IOMS.repository.UserRepository;
+import com.SCM.IOMS.security.CustomUserDetails;
 import com.SCM.IOMS.security.JwtTokenProvider;
 import com.SCM.IOMS.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -61,6 +62,22 @@ class AuthServiceImplTest {
         assertEquals("admin", response.getUsername());
         assertEquals("admin@ioms.com", response.getEmail());
         assertEquals("System Admin", response.getFullName());
-        assertTrue(response.getRoles().contains("Administrator"));
+        assertTrue(response.getRoles().contains("ADMIN"));
+    }
+
+    @Test
+    void customUserDetails_shouldNormalizeRoleCodeWithoutDuplicateRolePrefix() {
+        Role role = new Role();
+        role.setRoleCode("ROLE_ADMIN");
+
+        User user = new User();
+        user.setUsername("admin");
+        user.setPasswordHash("encoded");
+        user.setRoles(Set.of(role));
+
+        CustomUserDetails details = new CustomUserDetails(user);
+
+        assertTrue(details.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN")));
     }
 }

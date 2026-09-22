@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -22,7 +24,13 @@ public class CustomUserDetails implements UserDetails {
         }
         return user.getRoles().stream()
                 .map(Role::getRoleCode)
-                .map(roleCode -> new SimpleGrantedAuthority("ROLE_" + roleCode))
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(code -> !code.isEmpty())
+                .map(code -> code.startsWith("ROLE_") ? code.substring(5) : code)
+                .map(code -> "ROLE_" + code.toUpperCase(Locale.ROOT))
+                .distinct()
+                .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 

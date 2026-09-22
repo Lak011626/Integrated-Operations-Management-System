@@ -59,12 +59,13 @@ public class SecurityConfig {
                                 "/error",
                                 "/",
                                 "/index.html",
+                                "/login.html",
+                                "/dashboard.html",
+                                "/staff-dashboard.html",
                                 "/css/**",
                                 "/js/**",
                                 "/assets/**"
                         ).permitAll()
-                        .requestMatchers("/dashboard.html").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers("/staff-dashboard.html").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())

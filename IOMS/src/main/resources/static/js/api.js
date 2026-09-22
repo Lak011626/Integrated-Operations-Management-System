@@ -95,16 +95,34 @@ function getCurrentUser() {
   }
 }
 
+function normalizeRoleValue(role) {
+  const raw = String(role || "")
+    .trim()
+    .toUpperCase();
+  const withoutPrefix = raw.replace(/^ROLE_/, "");
+
+  const aliasMap = {
+    ADMINISTRATOR: "ADMIN",
+    ADMIN: "ADMIN",
+    MANAGER: "MANAGER",
+    STAFF: "STAFF",
+    EMPLOYEE: "STAFF",
+    USER: "STAFF",
+  };
+
+  return aliasMap[withoutPrefix] || withoutPrefix;
+}
+
 function normalizeRoles(roles) {
   if (!Array.isArray(roles)) return [];
-  return roles.filter(Boolean).map((role) => String(role).trim().toUpperCase());
+  return roles.filter(Boolean).map((role) => normalizeRoleValue(role));
 }
 
 function hasAnyRole(...roles) {
   const currentRoles = normalizeRoles(getCurrentUser()?.roles || []);
-  return roles.some((role) =>
-    currentRoles.includes(String(role).trim().toUpperCase()),
-  );
+  const allowedRoles = roles.map((role) => normalizeRoleValue(role));
+
+  return currentRoles.some((role) => allowedRoles.includes(role));
 }
 
 function routeAfterLogin() {
@@ -112,4 +130,29 @@ function routeAfterLogin() {
     return "/dashboard.html";
   }
   return "/staff-dashboard.html";
+}
+
+function checkAuthAndRedirect() {
+  const token = getToken();
+  const user = getCurrentUser();
+
+  if (!token || !user) {
+    window.location.href = "/index.html";
+    return false;
+  }
+
+  const isManagerOrAdmin = hasAnyRole("ADMIN", "MANAGER");
+  const path = window.location.pathname;
+
+  if (path.endsWith("/dashboard.html") && !isManagerOrAdmin) {
+    window.location.href = "/staff-dashboard.html";
+    return false;
+  }
+
+  if (path.endsWith("/staff-dashboard.html") && isManagerOrAdmin) {
+    window.location.href = "/dashboard.html";
+    return false;
+  }
+
+  return true;
 }

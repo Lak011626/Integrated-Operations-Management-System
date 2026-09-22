@@ -16,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +43,15 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() -> new BadCredentialsException("Tài khoản không tồn tại"));
 
         List<String> roles = user.getRoles() == null ? List.of() : user.getRoles().stream()
-                .map(Role::getRoleName)
+                .map(role -> role.getRoleCode() != null && !role.getRoleCode().isBlank()
+                        ? role.getRoleCode()
+                        : role.getRoleName())
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(code -> !code.isEmpty())
+                .map(code -> code.startsWith("ROLE_") ? code.substring(5) : code)
+                .map(code -> code.toUpperCase(Locale.ROOT))
+                .distinct()
                 .toList();
 
         String token = jwtTokenProvider.generateToken(authentication);
