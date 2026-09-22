@@ -1,0 +1,1424 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Trang cá nhân | IOMS</title>
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* =====================================================
+           RESET
+           ===================================================== */
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f4f7fb;
+        color: #172033;
+
+        overflow-x: hidden;
+      }
+
+      /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+      .staff-sidebar {
+        position: fixed;
+
+        left: 0;
+        top: 0;
+        bottom: 0;
+
+        width: 250px;
+        height: 100vh;
+
+        background: #17283d;
+        color: white;
+
+        z-index: 1000;
+
+        box-shadow: 4px 0 18px rgba(15, 23, 42, 0.08);
+      }
+
+      /* Logo */
+
+      .staff-sidebar-brand {
+        height: 76px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 0 28px;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+
+      .staff-sidebar-brand h2 {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        margin: 0;
+
+        color: white;
+
+        font-size: 21px;
+        font-weight: 700;
+
+        letter-spacing: 0.5px;
+      }
+
+      .staff-sidebar-brand i {
+        color: #38bdf8;
+
+        font-size: 25px;
+      }
+
+      /* Navigation */
+
+      .staff-sidebar-nav {
+        padding: 24px 16px;
+      }
+
+      .staff-nav-title {
+        margin: 18px 13px 9px;
+
+        color: #8493a8;
+
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: 1px;
+      }
+
+      .staff-nav-title:first-child {
+        margin-top: 0;
+      }
+
+      .staff-sidebar ul {
+        list-style: none;
+
+        margin: 0;
+        padding: 0;
+      }
+
+      .staff-sidebar li {
+        margin: 4px 0;
+      }
+
+      .staff-sidebar a {
+        min-height: 44px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 13px;
+
+        padding: 0 14px;
+
+        border-radius: 9px;
+
+        color: #c7d1df;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        transition: all 0.2s ease;
+      }
+
+      .staff-sidebar a i {
+        width: 20px;
+
+        text-align: center;
+
+        font-size: 15px;
+      }
+
+      .staff-sidebar a:hover {
+        background: rgba(255, 255, 255, 0.08);
+
+        color: white;
+      }
+
+      .staff-sidebar li.active a {
+        background: #2864e8;
+
+        color: white;
+
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.25);
+      }
+
+      /* =====================================================
+           MAIN
+           ===================================================== */
+
+      .staff-main {
+        margin-left: 250px;
+
+        width: calc(100% - 250px);
+
+        min-height: 100vh;
+
+        background: #f4f7fb;
+      }
+
+      /* =====================================================
+           TOP BAR
+           ===================================================== */
+
+      .staff-topbar {
+        width: 100%;
+        height: 76px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 32px;
+
+        background: white;
+
+        border-bottom: 1px solid #e5eaf1;
+
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+      }
+
+      .staff-breadcrumb {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        color: #94a3b8;
+
+        font-size: 13px;
+      }
+
+      .staff-breadcrumb i {
+        font-size: 9px;
+      }
+
+      .staff-breadcrumb .current {
+        color: #334155;
+
+        font-weight: 600;
+      }
+
+      /* Top right */
+
+      .staff-topbar-right {
+        display: flex;
+        align-items: center;
+
+        gap: 22px;
+      }
+
+      /* Notification */
+
+      .staff-notification {
+        position: relative;
+
+        color: #64748b;
+
+        font-size: 20px;
+
+        cursor: pointer;
+      }
+
+      .staff-notification-badge {
+        position: absolute;
+
+        top: -9px;
+        right: -10px;
+
+        min-width: 19px;
+        height: 19px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 4px;
+
+        border-radius: 50%;
+
+        background: #ef4444;
+
+        color: white;
+
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      /* User */
+
+      .staff-user {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        color: #334155;
+
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .staff-avatar-small {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #dbeafe;
+
+        color: #2563eb;
+
+        font-size: 16px;
+      }
+
+      .staff-user-chevron {
+        margin-left: 2px;
+
+        font-size: 10px;
+
+        color: #64748b;
+      }
+
+      /* =====================================================
+           CONTENT
+           ===================================================== */
+
+      .staff-content {
+        width: 100%;
+
+        max-width: none;
+
+        margin: 0;
+
+        padding: 32px 36px;
+      }
+
+      /* =====================================================
+           WELCOME
+           ===================================================== */
+
+      .staff-welcome {
+        margin-bottom: 25px;
+      }
+
+      .staff-welcome-label {
+        margin-bottom: 7px;
+
+        color: #2563eb;
+
+        font-size: 12px;
+        font-weight: 700;
+
+        letter-spacing: 1px;
+      }
+
+      .staff-welcome h1 {
+        margin: 0 0 7px;
+
+        color: #0f172a;
+
+        font-size: 29px;
+        font-weight: 700;
+
+        line-height: 1.3;
+      }
+
+      .staff-welcome p {
+        margin: 0;
+
+        color: #64748b;
+
+        font-size: 14px;
+      }
+
+      /* =====================================================
+           EMPLOYEE INFORMATION
+           ===================================================== */
+
+      .staff-profile-card {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+
+        gap: 24px;
+
+        padding: 25px 28px;
+
+        margin-bottom: 27px;
+
+        background: white;
+
+        border: 1px solid #e3e9f1;
+
+        border-radius: 15px;
+
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+      }
+
+      .staff-profile-avatar {
+        width: 76px;
+        height: 76px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 15px;
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        font-size: 28px;
+      }
+
+      .staff-profile-info {
+        flex: 1;
+
+        min-width: 0;
+      }
+
+      .staff-profile-name {
+        margin: 0 0 6px;
+
+        color: #0f172a;
+
+        font-size: 21px;
+        font-weight: 700;
+      }
+
+      .staff-profile-role {
+        display: inline-block;
+
+        padding: 4px 10px;
+
+        margin-bottom: 19px;
+
+        border-radius: 6px;
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .staff-profile-details {
+        display: grid;
+
+        grid-template-columns:
+          minmax(160px, 1fr)
+          minmax(220px, 1.5fr)
+          minmax(160px, 1fr);
+
+        gap: 30px;
+      }
+
+      .staff-detail-label {
+        display: block;
+
+        margin-bottom: 5px;
+
+        color: #94a3b8;
+
+        font-size: 11px;
+      }
+
+      .staff-detail-value {
+        color: #334155;
+
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      /* =====================================================
+           SECTION TITLE
+           ===================================================== */
+
+      .staff-section-header {
+        margin-bottom: 14px;
+      }
+
+      .staff-section-header h2 {
+        margin: 0 0 4px;
+
+        color: #1e293b;
+
+        font-size: 18px;
+      }
+
+      .staff-section-header p {
+        margin: 0;
+
+        color: #94a3b8;
+
+        font-size: 12px;
+      }
+
+      /* =====================================================
+           SUMMARY CARDS
+           ===================================================== */
+
+      .staff-summary-grid {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: repeat(4, minmax(180px, 1fr));
+
+        gap: 18px;
+
+        margin-bottom: 28px;
+      }
+
+      .staff-summary-card {
+        min-height: 100px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 14px;
+
+        padding: 18px;
+
+        background: white;
+
+        border: 1px solid #e4eaf1;
+
+        border-radius: 13px;
+
+        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.03);
+      }
+
+      .staff-summary-icon {
+        width: 45px;
+        height: 45px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        font-size: 17px;
+      }
+
+      .staff-icon-blue {
+        background: #eff6ff;
+        color: #2563eb;
+      }
+
+      .staff-icon-orange {
+        background: #fff7ed;
+        color: #ea580c;
+      }
+
+      .staff-icon-green {
+        background: #ecfdf5;
+        color: #059669;
+      }
+
+      .staff-icon-red {
+        background: #fef2f2;
+        color: #dc2626;
+      }
+
+      .staff-summary-text label {
+        display: block;
+
+        margin-bottom: 5px;
+
+        color: #64748b;
+
+        font-size: 11px;
+      }
+
+      .staff-summary-text strong {
+        display: block;
+
+        color: #0f172a;
+
+        font-size: 23px;
+        line-height: 1;
+      }
+
+      /* =====================================================
+           TASK PANEL
+           ===================================================== */
+
+      .staff-task-panel {
+        width: 100%;
+
+        background: white;
+
+        border: 1px solid #e4eaf1;
+
+        border-radius: 15px;
+
+        overflow: hidden;
+
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+      }
+
+      .staff-task-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 21px 24px;
+
+        border-bottom: 1px solid #edf1f5;
+      }
+
+      .staff-task-header h2 {
+        margin: 0 0 5px;
+
+        color: #1e293b;
+
+        font-size: 18px;
+      }
+
+      .staff-task-header p {
+        margin: 0;
+
+        color: #94a3b8;
+
+        font-size: 12px;
+      }
+
+      .staff-view-all {
+        display: flex;
+        align-items: center;
+
+        gap: 5px;
+
+        color: #2563eb;
+
+        text-decoration: none;
+
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .staff-view-all:hover {
+        text-decoration: underline;
+      }
+
+      /* Task item */
+
+      .staff-task-list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .staff-task-item {
+        min-height: 75px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 15px;
+
+        padding: 16px 24px;
+
+        border-bottom: 1px solid #f1f5f9;
+
+        transition: background 0.2s ease;
+      }
+
+      .staff-task-item:last-child {
+        border-bottom: none;
+      }
+
+      .staff-task-item:hover {
+        background: #f8fafc;
+      }
+
+      .staff-task-icon {
+        width: 41px;
+        height: 41px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background: #f1f5f9;
+
+        color: #475569;
+
+        font-size: 15px;
+      }
+
+      .staff-task-info {
+        flex: 1;
+
+        min-width: 0;
+      }
+
+      .staff-task-title {
+        display: block;
+
+        margin-bottom: 5px;
+
+        color: #334155;
+
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .staff-task-meta {
+        display: block;
+
+        color: #94a3b8;
+
+        font-size: 11px;
+      }
+
+      /* Status */
+
+      .staff-task-status {
+        flex-shrink: 0;
+
+        padding: 5px 10px;
+
+        border-radius: 6px;
+
+        font-size: 10px;
+        font-weight: 600;
+
+        white-space: nowrap;
+      }
+
+      .staff-status-todo {
+        background: #eff6ff;
+
+        color: #2563eb;
+      }
+
+      .staff-status-progress {
+        background: #fff7ed;
+
+        color: #c2410c;
+      }
+
+      .staff-status-overdue {
+        background: #fef2f2;
+
+        color: #dc2626;
+      }
+
+      /* =====================================================
+           FOOTER
+           ===================================================== */
+
+      .staff-footer {
+        width: 100%;
+
+        padding: 25px 36px;
+
+        text-align: center;
+
+        color: #94a3b8;
+
+        font-size: 11px;
+      }
+
+      /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+      @media (max-width: 1100px) {
+        .staff-summary-grid {
+          grid-template-columns: repeat(2, minmax(200px, 1fr));
+        }
+
+        .staff-profile-details {
+          grid-template-columns: repeat(2, minmax(150px, 1fr));
+        }
+      }
+
+      @media (max-width: 800px) {
+        .staff-sidebar {
+          width: 220px;
+        }
+
+        .staff-main {
+          margin-left: 220px;
+
+          width: calc(100% - 220px);
+        }
+
+        .staff-content {
+          padding: 25px;
+        }
+
+        .staff-profile-card {
+          align-items: flex-start;
+        }
+
+        .staff-profile-details {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 650px) {
+        .staff-sidebar {
+          display: none;
+        }
+
+        .staff-main {
+          margin-left: 0;
+
+          width: 100%;
+        }
+
+        .staff-topbar {
+          padding: 0 18px;
+        }
+
+        .staff-content {
+          padding: 20px 18px;
+        }
+
+        .staff-welcome h1 {
+          font-size: 23px;
+        }
+
+        .staff-profile-card {
+          flex-direction: column;
+
+          align-items: flex-start;
+        }
+
+        .staff-profile-details {
+          width: 100%;
+        }
+
+        .staff-summary-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .staff-task-item {
+          align-items: flex-start;
+        }
+
+        .staff-task-status {
+          margin-left: auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =====================================================
+     SIDEBAR
+     ===================================================== -->
+
+    <aside class="staff-sidebar">
+      <!-- Logo -->
+
+      <div class="staff-sidebar-brand">
+        <h2>
+          <i class="fa-solid fa-chart-pie"></i>
+          IOMS
+        </h2>
+      </div>
+
+      <!-- Navigation -->
+
+      <nav class="staff-sidebar-nav">
+        <!-- CÁ NHÂN -->
+
+        <div class="staff-nav-title">CÁ NHÂN</div>
+
+        <ul>
+          <li class="active">
+            <a href="/staff-dashboard.html">
+              <i class="fa-solid fa-house"></i>
+
+              <span>Tổng quan</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-list-check"></i>
+
+              <span>Công việc của tôi</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-calendar-days"></i>
+
+              <span>Nghỉ phép</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- VẬN HÀNH -->
+
+        <div class="staff-nav-title">VẬN HÀNH</div>
+
+        <ul>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-building"></i>
+
+              <span>Gian hàng</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-file-contract"></i>
+
+              <span>Hợp đồng</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-screwdriver-wrench"></i>
+
+              <span>Bảo trì</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- TÀI KHOẢN -->
+
+        <div class="staff-nav-title">TÀI KHOẢN</div>
+
+        <ul>
+          <li>
+            <a href="#">
+              <i class="fa-regular fa-user"></i>
+
+              <span>Hồ sơ cá nhân</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" id="logoutLink">
+              <i class="fa-solid fa-right-from-bracket"></i>
+
+              <span>Đăng xuất</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+    <div class="staff-main">
+      <!-- =================================================
+         TOP BAR
+         ================================================= -->
+
+      <header class="staff-topbar">
+        <div class="staff-breadcrumb">
+          <span>IOMS</span>
+
+          <i class="fa-solid fa-chevron-right"></i>
+
+          <span class="current"> Trang cá nhân </span>
+        </div>
+
+        <div class="staff-topbar-right">
+          <!-- Notification -->
+
+          <div class="staff-notification">
+            <i class="fa-regular fa-bell"></i>
+
+            <span class="staff-notification-badge"> 3 </span>
+          </div>
+
+          <!-- User -->
+
+          <div class="staff-user">
+            <div class="staff-avatar-small">
+              <i class="fa-solid fa-user"></i>
+            </div>
+
+            <span id="header-username"> Đang tải... </span>
+
+            <i class="fa-solid fa-chevron-down staff-user-chevron"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- =================================================
+         CONTENT
+         ================================================= -->
+
+      <main class="staff-content">
+        <!-- =================================================
+             WELCOME
+             ================================================= -->
+
+        <section class="staff-welcome">
+          <div class="staff-welcome-label">TRANG CÁ NHÂN</div>
+
+          <h1>
+            Chào mừng trở lại,
+            <span id="welcome-name">-</span> 👋
+          </h1>
+
+          <p>Đây là tổng quan về thông tin và công việc của bạn.</p>
+        </section>
+
+        <!-- =================================================
+             PROFILE
+             ================================================= -->
+
+        <section class="staff-profile-card">
+          <!-- Avatar -->
+
+          <div class="staff-profile-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+
+          <!-- Information -->
+
+          <div class="staff-profile-info">
+            <h2 class="staff-profile-name" id="staff-name">-</h2>
+
+            <span class="staff-profile-role" id="staff-role"> Nhân viên </span>
+
+            <div class="staff-profile-details">
+              <!-- Join date -->
+
+              <div>
+                <span class="staff-detail-label"> Ngày vào làm </span>
+
+                <strong class="staff-detail-value" id="staff-join-date">
+                  Chưa cập nhật
+                </strong>
+              </div>
+
+              <!-- Email -->
+
+              <div>
+                <span class="staff-detail-label"> Email </span>
+
+                <strong class="staff-detail-value" id="staff-email"> - </strong>
+              </div>
+
+              <!-- Leave -->
+
+              <div>
+                <span class="staff-detail-label"> Ngày nghỉ tháng này </span>
+
+                <strong class="staff-detail-value">
+                  <span id="staff-leave-days"> 0 </span>
+
+                  ngày
+                </strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================
+             WORK SUMMARY
+             ================================================= -->
+
+        <section>
+          <div class="staff-section-header">
+            <h2>Tình hình công việc</h2>
+
+            <p>Tổng quan các công việc được giao cho bạn</p>
+          </div>
+
+          <div class="staff-summary-grid">
+            <!-- Cần làm -->
+
+            <div class="staff-summary-card">
+              <div class="staff-summary-icon staff-icon-blue">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+
+              <div class="staff-summary-text">
+                <label> Cần làm </label>
+
+                <strong id="staff-todo-tasks"> 0 </strong>
+              </div>
+            </div>
+
+            <!-- Đang thực hiện -->
+
+            <div class="staff-summary-card">
+              <div class="staff-summary-icon staff-icon-orange">
+                <i class="fa-solid fa-spinner"></i>
+              </div>
+
+              <div class="staff-summary-text">
+                <label> Đang thực hiện </label>
+
+                <strong id="staff-progress-tasks"> 0 </strong>
+              </div>
+            </div>
+
+            <!-- Chưa hoàn thành -->
+
+            <div class="staff-summary-card">
+              <div class="staff-summary-icon staff-icon-green">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+
+              <div class="staff-summary-text">
+                <label> Chưa hoàn thành </label>
+
+                <strong id="staff-pending-tasks"> 0 </strong>
+              </div>
+            </div>
+
+            <!-- Quá hạn -->
+
+            <div class="staff-summary-card">
+              <div class="staff-summary-icon staff-icon-red">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+
+              <div class="staff-summary-text">
+                <label> Quá hạn </label>
+
+                <strong id="staff-overdue-tasks"> 0 </strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================
+             TASK LIST
+             ================================================= -->
+
+        <section class="staff-task-panel">
+          <!-- Header -->
+
+          <div class="staff-task-header">
+            <div>
+              <h2>Công việc của tôi</h2>
+
+              <p>Các công việc bạn cần xử lý</p>
+            </div>
+
+            <a href="#" class="staff-view-all">
+              Xem tất cả
+
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Task list -->
+
+          <div class="staff-task-list" id="task-list">
+            <!-- Task 1 -->
+
+            <div class="staff-task-item">
+              <div class="staff-task-icon">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+              </div>
+
+              <div class="staff-task-info">
+                <span class="staff-task-title"> Kiểm tra thiết bị tầng 2 </span>
+
+                <span class="staff-task-meta">
+                  Hạn hoàn thành: 25/09/2026
+                </span>
+              </div>
+
+              <span class="staff-task-status staff-status-todo"> Cần làm </span>
+            </div>
+
+            <!-- Task 2 -->
+
+            <div class="staff-task-item">
+              <div class="staff-task-icon">
+                <i class="fa-solid fa-building"></i>
+              </div>
+
+              <div class="staff-task-info">
+                <span class="staff-task-title">
+                  Cập nhật tình trạng gian hàng A102
+                </span>
+
+                <span class="staff-task-meta">
+                  Hạn hoàn thành: 24/09/2026
+                </span>
+              </div>
+
+              <span class="staff-task-status staff-status-progress">
+                Đang làm
+              </span>
+            </div>
+
+            <!-- Task 3 -->
+
+            <div class="staff-task-item">
+              <div class="staff-task-icon">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+
+              <div class="staff-task-info">
+                <span class="staff-task-title">
+                  Hoàn thiện báo cáo công việc tuần
+                </span>
+
+                <span class="staff-task-meta"> Đã quá hạn 1 ngày </span>
+              </div>
+
+              <span class="staff-task-status staff-status-overdue">
+                Quá hạn
+              </span>
+            </div>
+
+            <!-- Task 4 -->
+
+            <div class="staff-task-item">
+              <div class="staff-task-icon">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+
+              <div class="staff-task-info">
+                <span class="staff-task-title">
+                  Phản hồi yêu cầu từ bộ phận quản lý
+                </span>
+
+                <span class="staff-task-meta">
+                  Hạn hoàn thành: 26/09/2026
+                </span>
+              </div>
+
+              <span class="staff-task-status staff-status-todo"> Cần làm </span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- =================================================
+         FOOTER
+         ================================================= -->
+
+      <footer class="staff-footer">
+        © 2026 IOMS — Hệ thống Quản lý Vận hành Nội bộ
+      </footer>
+    </div>
+
+    <!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+    <script src="/js/api.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* =====================================================
+       GET CURRENT USER
+       ===================================================== */
+
+        const user = getCurrentUser();
+
+        /*
+         * Nếu chưa đăng nhập
+         */
+
+        if (!user) {
+          checkAuthAndRedirect();
+
+          return;
+        }
+
+        /* =====================================================
+       GET ROLES
+       ===================================================== */
+
+        const roleList = Array.isArray(user.roles) ? user.roles : [];
+
+        const normalizedRoles = roleList.map((role) =>
+          String(role).trim().toUpperCase(),
+        );
+
+        /* =====================================================
+       MANAGER / ADMIN
+       ===================================================== */
+
+        const isManagerOrAdmin = normalizedRoles.some(
+          (role) =>
+            role === "ADMIN" ||
+            role === "MANAGER" ||
+            role.includes("ADMIN") ||
+            role.includes("MANAGER"),
+        );
+
+        /*
+         * Manager / Admin không sử dụng
+         * trang Staff.
+         *
+         * Chuyển sang dashboard tổng quan.
+         */
+
+        if (isManagerOrAdmin) {
+          window.location.href = "/dashboard.html";
+
+          return;
+        }
+
+        /* =====================================================
+       USER INFORMATION
+       ===================================================== */
+
+        const fullName = user.fullName || user.username || "-";
+
+        /*
+         * Welcome
+         */
+
+        document.getElementById("welcome-name").textContent = fullName;
+
+        /*
+         * Profile name
+         */
+
+        document.getElementById("staff-name").textContent = fullName;
+
+        /*
+         * Header username
+         */
+
+        document.getElementById("header-username").textContent =
+          user.username || fullName;
+
+        /*
+         * Email
+         */
+
+        document.getElementById("staff-email").textContent = user.email || "-";
+
+        /*
+         * Role
+         */
+
+        document.getElementById("staff-role").textContent =
+          roleList.length > 0 ? roleList.join(", ") : "Nhân viên";
+
+        /* =====================================================
+       JOIN DATE
+       ===================================================== */
+
+        const joinDate = user.createdAt ? new Date(user.createdAt) : null;
+
+        document.getElementById("staff-join-date").textContent = joinDate
+          ? joinDate.toLocaleDateString("vi-VN")
+          : "Chưa cập nhật";
+
+        /* =====================================================
+       DEMO DATA
+       =====================================================
+
+       Những dữ liệu dưới đây hiện chỉ là demo.
+
+       Sau này sẽ lấy từ Backend API.
+
+       ===================================================== */
+
+        /*
+         * Nghỉ phép trong tháng
+         */
+
+        document.getElementById("staff-leave-days").textContent = "2";
+
+        /*
+         * Công việc cần làm
+         */
+
+        document.getElementById("staff-todo-tasks").textContent = "5";
+
+        /*
+         * Công việc đang thực hiện
+         */
+
+        document.getElementById("staff-progress-tasks").textContent = "3";
+
+        /*
+         * Công việc chưa hoàn thành
+         */
+
+        document.getElementById("staff-pending-tasks").textContent = "2";
+
+        /*
+         * Công việc quá hạn
+         */
+
+        document.getElementById("staff-overdue-tasks").textContent = "1";
+
+        /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+        document
+          .getElementById("logoutLink")
+          .addEventListener("click", (event) => {
+            event.preventDefault();
+
+            if (typeof logout === "function") {
+              logout();
+            } else {
+              localStorage.clear();
+
+              window.location.href = "/";
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

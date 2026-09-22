@@ -3,49 +3,264 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard IOMS</title>
+    <meta
+      name="description"
+      content="Bảng điều khiển quản trị Hệ thống Quản lý Vận hành Nội bộ (IOMS)."
+    />
+    <title>Tổng quan | IOMS - Quản trị doanh nghiệp</title>
+
+    <!-- Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Biểu đồ thống kê -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"
+      defer
+    ></script>
+
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
   </head>
   <body class="dashboard-layout">
-    <header class="dashboard-header">
-      <h2>IOMS Dashboard</h2>
-      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
-    </header>
+    <a class="skip-link" href="#main-content">Bỏ qua để đến nội dung chính</a>
 
-    <main class="dashboard-content">
-      <div class="dashboard-box">
-        <div id="user-badge" class="user-badge">Đang tải...</div>
-        <h1>Chào mừng bạn đến với hệ thống IOMS</h1>
-        <p>Bạn đã đăng nhập thành công.</p>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <div class="meta-list">
-          <div><strong>Username:</strong> <span id="user-name">-</span></div>
-          <div><strong>Email:</strong> <span id="user-email">-</span></div>
-          <div>
-            <strong>Full name:</strong> <span id="user-fullname">-</span>
-          </div>
-          <div><strong>Roles:</strong> <span id="user-roles">-</span></div>
-        </div>
+    <aside class="sidebar" id="sidebar" aria-label="Điều hướng chính">
+      <div class="sidebar-brand">
+        <h2>
+          <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> IOMS Manager
+        </h2>
       </div>
-    </main>
+      <nav>
+        <p class="nav-section-label">TỔNG QUAN</p>
+        <ul class="sidebar-nav">
+          <li class="active">
+            <a href="#" aria-current="page"
+              ><i class="fa-solid fa-house" aria-hidden="true"></i> Tổng quan</a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Báo cáo
+              &amp; Thống kê</a
+            >
+          </li>
+        </ul>
+        <p class="nav-section-label">VẬN HÀNH</p>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="#"
+              ><i class="fa-solid fa-users" aria-hidden="true"></i> Quản lý Nhân
+              sự</a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa-solid fa-box" aria-hidden="true"></i> Quản lý Kho</a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Đơn
+              hàng</a
+            >
+          </li>
+        </ul>
+        <p class="nav-section-label">HỆ THỐNG</p>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="#"
+              ><i class="fa-solid fa-gear" aria-hidden="true"></i> Cài đặt hệ
+              thống</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="dashboard-header">
+        <div class="header-left">
+          <button
+            class="toggle-btn"
+            id="toggleSidebarBtn"
+            aria-label="Ẩn/hiện menu"
+            aria-expanded="true"
+            aria-controls="sidebar"
+          >
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+          </button>
+          <div>
+            <div class="breadcrumb">
+              <span>IOMS</span>
+              <i
+                class="fa-solid fa-chevron-right"
+                style="font-size: 10px"
+                aria-hidden="true"
+              ></i>
+              <span class="current">Tổng quan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div
+            class="user-profile"
+            id="userMenuToggle"
+            tabindex="0"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-label="Tài khoản"
+          >
+            <div class="avatar">
+              <i class="fa-solid fa-user" aria-hidden="true"></i>
+            </div>
+            <span id="header-username">Đang tải...</span>
+            <i
+              class="fa-solid fa-chevron-down"
+              style="font-size: 11px"
+              aria-hidden="true"
+            ></i>
+            <div class="dropdown-panel" id="userPanel">
+              <div class="dropdown-header">Tài khoản của tôi</div>
+              <a href="#" class="dropdown-item"
+                ><i class="fa-regular fa-user" aria-hidden="true"></i> Hồ sơ cá
+                nhân</a
+              >
+              <a href="#" class="dropdown-item"
+                ><i class="fa-solid fa-gear" aria-hidden="true"></i> Cài đặt</a
+              >
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item danger" id="logoutLink"
+                ><i
+                  class="fa-solid fa-right-from-bracket"
+                  aria-hidden="true"
+                ></i>
+                Đăng xuất</a
+              >
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-content" id="main-content">
+        <div class="welcome-banner">
+          <div>
+            <h1>Chào mừng trở lại, <span id="user-fullname">-</span>! 👋</h1>
+            <p>Hệ thống Quản lý Vận hành Nội bộ (IOMS).</p>
+            <span id="user-badge" class="badge-success">Đang tải...</span>
+          </div>
+          <div class="user-details-card">
+            <p><strong>Username:</strong> <span id="user-name">-</span></p>
+            <p><strong>Email:</strong> <span id="user-email">-</span></p>
+            <p><strong>Vai trò:</strong> <span id="user-roles">-</span></p>
+          </div>
+        </div>
+
+        <div class="kpi-cards">
+          <div class="card">
+            <div class="card-icon blue">
+              <i class="fa-solid fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="card-info">
+              <h3>Tên</h3>
+              <h2 id="manager-name">-</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon green">
+              <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+            </div>
+            <div class="card-info">
+              <h3>Ngày vào làm</h3>
+              <h2 id="manager-join-date">-</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon orange">
+              <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+            </div>
+            <div class="card-info">
+              <h3>Chức vụ</h3>
+              <h2 id="manager-job-title">-</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon red">
+              <i class="fa-solid fa-calendar-xmark" aria-hidden="true"></i>
+            </div>
+            <div class="card-info">
+              <h3>Số ngày đã nghỉ trong tháng</h3>
+              <h2 id="manager-leave-days">-</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon purple">
+              <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+            </div>
+            <div class="card-info">
+              <h3>Công việc chưa cần làm xong</h3>
+              <h2 id="manager-pending-tasks">-</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon teal">
+              <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+            </div>
+            <div class="card-info">
+              <h3>Công việc cần làm</h3>
+              <h2 id="manager-todo-tasks">-</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="panel">
+            <div class="section-header">
+              <h3>Báo cáo nhanh</h3>
+            </div>
+            <p
+              id="manager-latest-report"
+              style="margin: 0; line-height: 1.8; color: #334155"
+            >
+              Đang tải báo cáo...
+            </p>
+          </div>
+
+          <div class="panel recent-activity">
+            <div class="section-header">
+              <h3>Công việc cần xử lý</h3>
+            </div>
+            <ul
+              class="task-list"
+              style="
+                margin: 0;
+                padding-left: 1.2rem;
+                color: #334155;
+                display: grid;
+                gap: 0.6rem;
+                line-height: 1.6;
+              "
+            >
+              <li>Phê duyệt đơn hàng chờ xác nhận từ bộ phận vận hành.</li>
+              <li>Kiểm tra tồn kho các mặt hàng có nguy cơ thiếu hàng.</li>
+              <li>Review tiến độ công việc nhân sự trong tuần.</li>
+              <li>Chuẩn bị báo cáo cập nhật cho cuộc họp quản lý.</li>
+            </ul>
+          </div>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        © <span id="footerYear"></span> IOMS — Hệ thống Quản lý Vận hành Nội bộ.
+      </footer>
+    </div>
 
     <script src="/js/api.js"></script>
-    <script>
-      const user = getCurrentUser();
-      if (!user) {
-        checkAuthAndRedirect();
-      } else {
-        document.getElementById("user-badge").textContent = "Đã đăng nhập";
-        document.getElementById("user-name").textContent = user.username || "-";
-        document.getElementById("user-email").textContent = user.email || "-";
-        document.getElementById("user-fullname").textContent =
-          user.fullName || "-";
-        document.getElementById("user-roles").textContent = Array.isArray(
-          user.roles,
-        )
-          ? user.roles.join(", ")
-          : "-";
-      }
-    </script>
+    <script src="/js/dashboard.js"></script>
   </body>
 </html>

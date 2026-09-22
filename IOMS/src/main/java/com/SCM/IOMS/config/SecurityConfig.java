@@ -54,15 +54,17 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/auth/**", 
-                                "/api/ping", 
+                                "/api/auth/**",
+                                "/api/ping",
                                 "/error",
-                                "/",                 // Cho phép truy cập thư mục gốc
-                                "/*.html",           // Cho phép tất cả các file HTML (index, dashboard, tasks...)
-                                "/css/**",           // Cho phép thư mục CSS
-                                "/js/**",            // Cho phép thư mục JS
-                                "/assets/**"         // Cho phép thư mục hình ảnh/tài nguyên
+                                "/",
+                                "/index.html",
+                                "/css/**",
+                                "/js/**",
+                                "/assets/**"
                         ).permitAll()
+                        .requestMatchers("/dashboard.html").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/staff-dashboard.html").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())

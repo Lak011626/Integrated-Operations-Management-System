@@ -63,7 +63,7 @@ async function login() {
     messageBox.className = "alert success";
 
     setTimeout(() => {
-      window.location.href = "/dashboard.html";
+      window.location.href = routeAfterLogin();
     }, 700);
   } catch (error) {
     messageBox.textContent = error.message || "Đăng nhập thất bại";
@@ -95,9 +95,21 @@ function getCurrentUser() {
   }
 }
 
-function checkAuthAndRedirect() {
-  const token = getToken();
-  if (!token) {
-    window.location.href = "/";
+function normalizeRoles(roles) {
+  if (!Array.isArray(roles)) return [];
+  return roles.filter(Boolean).map((role) => String(role).trim().toUpperCase());
+}
+
+function hasAnyRole(...roles) {
+  const currentRoles = normalizeRoles(getCurrentUser()?.roles || []);
+  return roles.some((role) =>
+    currentRoles.includes(String(role).trim().toUpperCase()),
+  );
+}
+
+function routeAfterLogin() {
+  if (hasAnyRole("ADMIN", "MANAGER")) {
+    return "/dashboard.html";
   }
+  return "/staff-dashboard.html";
 }
